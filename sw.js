@@ -1,6 +1,6 @@
 // Offline support: keeps a copy of the app on the phone, and fetches fresh files whenever online.
-const CACHE = "revision-hub-v1";
-const SHELL = ["./", "index.html", "content.js", "engine.js", "cloud.js", "config.js", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png"];
+const CACHE = "revision-hub-v2";
+const SHELL = ["./", "index.html", "content.js", "engine.js", "cloud.js", "config.js", "manifest.webmanifest", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => {
