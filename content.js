@@ -750,3 +750,153 @@ add("dt", [
     "Which material suits a lightweight aircraft frame?|Aluminium alloy or carbon fibre|Cast iron|Concrete|Oak"])
 ]);
 
+
+/* ---------- slide-to-estimate and tap-the-word sets ---------- */
+// R: "question|answer|min|max|step|unit|tolerance"
+const R = (topic,title,items) => [{type:"slider",topic,title,items:items.map(x=>{ const [q,a,min,max,step,unit,tol]=x.split("|"); return {q,a:+a,min:+min,max:+max,step:+step,unit:unit||"",tol:+(tol||0)}; })}];
+// H: "question|sentence|answer;answer|why"   or {q, lines:[...], a:[...], why}
+const H = (topic,title,items) => [{type:"tap",topic,title,items:items.map(x=> typeof x === "string" ? (([q,text,a,why])=>({q,text,a:a.split(";"),why}))(x.split("|")) : x)}];
+
+add("sci", [
+  ...R("Estimate it","Science numbers to know",[
+    "Speed of sound in air|340|0|1000|10|m/s|30",
+    "Percentage of the air that is nitrogen|78|0|100|1|%|3",
+    "Percentage of the air that is oxygen|21|0|100|1|%|2",
+    "Normal human body temperature|37|30|45|0.5|°C|0.5",
+    "pH of pure water|7|0|14|0.5||0",
+    "Gravitational field strength on Earth|9.8|0|20|0.1|N/kg|0.2",
+    "Chromosomes in a human body cell|46|0|100|1||0",
+    "UK mains voltage|230|0|400|10|V|0",
+    "Absolute zero|-273|-400|0|1|°C|3",
+    "Optimum temperature for most human enzymes|37|0|80|1|°C|3",
+    "Speed of light, in millions of m/s|300|0|1000|10|million m/s|10",
+    "Frequency of UK mains electricity|50|0|120|5|Hz|0"]),
+  ...R("Real world: engineering","Engineering estimates",[
+    "Typical cruising speed of a passenger jet|900|0|1500|50|km/h|100",
+    "Typical cruising height of a passenger jet|11|0|20|0.5|km|1.5",
+    "Speed at the bottom of a 50 m coaster drop, ignoring friction (v = √(2gh))|31|0|60|1|m/s|1",
+    "Riders feel about this many g in a tight coaster loop|4|0|10|0.5|g|1"]),
+  ...H("Required practicals","Spot the variable",[
+    "Tap the independent variable|We changed the temperature of the acid and timed how long the cross took to disappear.|temperature|It’s what you change on purpose.",
+    "Tap the dependent variable|We changed the concentration of acid and measured the time taken for the cross to disappear.|time|It’s what you measure.",
+    "Tap the independent variable|Pondweed was placed at different distances from a lamp and the bubbles were counted.|distances|You change the distance to change light intensity.",
+    "Tap the dependent variable|Pondweed was placed at different distances from a lamp and the bubbles were counted.|bubbles|Counting bubbles measures the rate of photosynthesis.",
+    "Tap the control variable|The same mass of potato was placed in each sugar solution.|mass|Keeping mass the same makes it a fair test.",
+    "Tap the word that shows the reaction is exothermic|The temperature of the mixture rose by 12 °C.|rose|Exothermic reactions release energy, so the temperature goes up.",
+    "Tap the dependent variable|We added different masses to the spring and measured its extension each time.|extension|You measure the extension.",
+    "Tap the independent variable|We tested amylase at pH 4, 5, 6, 7 and 8 and timed how long starch took to break down.|pH|You choose the pH values."])
+]);
+
+add("maths", [
+  ...R("Estimate it","Know your values",[
+    "Interior angle of a regular hexagon|120|0|180|5|°|0",
+    "Sum of the interior angles of an octagon|1080|0|1800|30|°|0",
+    "Exterior angle of a regular decagon|36|0|90|1|°|0",
+    "π to 2 decimal places|3.14|3|3.3|0.01||0",
+    "√2 to 1 decimal place|1.4|1|2|0.1||0",
+    "cos 60°|0.5|0|1|0.05||0",
+    "sin 90°|1|0|1|0.05||0",
+    "15% of 80|12|0|40|1||0",
+    "Probability of rolling a 6 on a fair dice, to 2 dp|0.17|0|1|0.01||0.01",
+    "Angle in a semicircle|90|0|180|5|°|0"]),
+  ...H("A-level prep: grade 9 stretch","Spot the wrong step",[
+    {q:"Tap the wrong step. Solve 2x + 6 = 14.", lines:["2x + 6 = 14","2x = 20","x = 10"], a:["2x = 20"], why:"Subtract 6 from both sides: 2x = 8, so x = 4."},
+    {q:"Tap the wrong step. Expand (x + 2)(x − 5).", lines:["(x + 2)(x − 5)","= x² − 5x + 2x − 10","= x² + 3x − 10"], a:["= x² + 3x − 10"], why:"−5x + 2x = −3x, so it’s x² − 3x − 10."},
+    {q:"Tap the wrong step. Expand (x + 3)².", lines:["(x + 3)²","= (x + 3)(x + 3)","= x² + 9"], a:["= x² + 9"], why:"Don’t forget the middle term: x² + 6x + 9."},
+    {q:"Tap the wrong step. Find 15% of 60.", lines:["10% of 60 = 6","5% of 60 = 3","15% of 60 = 6 + 3 = 8"], a:["15% of 60 = 6 + 3 = 8"], why:"6 + 3 = 9."},
+    {q:"Tap the wrong step. Gradient between (1, 2) and (3, 8).", lines:["Change in y = 8 − 2 = 6","Change in x = 3 − 1 = 2","Gradient = 2 ÷ 6 = 1/3"], a:["Gradient = 2 ÷ 6 = 1/3"], why:"Gradient is change in y ÷ change in x: 6 ÷ 2 = 3."},
+    {q:"Tap the wrong step. Simplify 3x × 4x.", lines:["3x × 4x","= 12x","so 3x × 4x = 12x"], a:["= 12x","so 3x × 4x = 12x"], why:"x × x = x², so it’s 12x²."},
+    {q:"Tap the wrong step. Solve x² = 25.", lines:["x² = 25","x = √25","x = 5 only"], a:["x = 5 only"], why:"x can be 5 or −5."}])
+]);
+
+add("lit", [
+  ...R("Context","When did it happen?",[
+    "Year Macbeth was first performed (roughly)|1606|1550|1700|1||5",
+    "Year Jekyll and Hyde was published|1886|1800|1950|1||3",
+    "Year An Inspector Calls is set|1912|1880|1960|1||0",
+    "Year An Inspector Calls was first performed|1945|1880|1960|1||1",
+    "Year the Titanic sank|1912|1880|1960|1||0",
+    "Year the First World War began|1914|1880|1960|1||0",
+    "Lines in a sonnet|14|0|30|1||0",
+    "Syllables in a line of iambic pentameter|10|0|20|1||0"]),
+  ...H("Macbeth","Zoom in on the word: Macbeth",[
+    "Tap the word that shows Macbeth’s tortured mind|O, full of scorpions is my mind, dear wife!|scorpions|Scorpions suggest constant, poisonous torment.",
+    "Tap the word that links Lady Macbeth to evil|Look like th’ innocent flower, But be the serpent under’t|serpent|The serpent recalls the devil in the Garden of Eden.",
+    "Tap the word showing Lady Macbeth rejecting femininity|Come, you spirits that tend on mortal thoughts, unsex me here|unsex|She asks to be stripped of womanly gentleness.",
+    "Tap the word showing what drives Macbeth|I have no spur to prick the sides of my intent, but only vaulting ambition|ambition;vaulting|Vaulting ambition leaps too far and falls.",
+    "Tap the word that shows guilt Lady Macbeth can’t wash away|Out, damned spot! Out, I say!|spot|The imagined bloodstain shows her guilt."]),
+  ...H("Jekyll and Hyde","Zoom in on the word: Jekyll and Hyde",[
+    "Tap the word that makes Hyde seem less than human|with ape-like fury, he was trampling his victim under foot|ape-like|It links Hyde to Victorian fears about evolution and degeneration.",
+    "Tap the word that suggests Hyde is primitive|Something troglodytic, shall we say?|troglodytic|A troglodyte is a cave-dweller.",
+    "Tap the word that shows Jekyll’s double life|I stood already committed to a profound duplicity of life|duplicity|Duplicity means deceit, being two-faced."]),
+  ...H("Power and Conflict","Zoom in on the word: poems",[
+    "Tap the word that shows Ozymandias’s arrogance|sneer of cold command|sneer|A sneer shows contempt for others.",
+    "Tap the word showing the soldiers can’t question orders|Theirs not to reason why|reason|Obedience matters more than thinking for themselves.",
+    "Tap the word Blake uses for people trapping their own minds|The mind-forg’d manacles I hear|manacles;mind-forg’d|Manacles are chains; people are trapped by their own thinking.",
+    "Tap the word that shows nature’s threat in Exposure|Merciless iced east winds that knive us|knive|The wind is personified as a weapon."])
+]);
+
+add("lang", [
+  ...H("Language skills","Spot the technique",[
+    "Tap the verb that personifies the wind|The wind howled across the empty moor.|howled|Howling is something an animal or person does.",
+    "Tap the word that signals a simile|Her eyes sparkled like diamonds in the dark.|like|Similes compare using like or as.",
+    "Tap the onomatopoeia|The rain began to drip onto the tin roof.|drip|It sounds like its meaning.",
+    "Tap the metaphor|By the end of the day the classroom was a zoo.|zoo|It says the room IS a zoo, not like one.",
+    "Tap the imperative verb|Act now and save our seas before it is too late.|act;save|A command verb.",
+    "Tap the superlative|This is the worst decision the council has ever made.|worst|Superlatives show the most or least.",
+    "Tap the adverb|The door creaked slowly open.|slowly|It describes how the door opened.",
+    "Tap the emotive adjective|Thousands of helpless animals are abandoned every year.|helpless|It makes the reader feel pity.",
+    "Tap the word that shows pathetic fallacy|The sky wept as the coffin was lowered.|wept|The weather mirrors the mourners’ grief.",
+    "Tap the connective that shows contrast|The first source is hopeful; however, the second is bleak.|however|However signals a difference.",
+    "Tap the word that shows direct address|You know as well as I do that this cannot continue.|you|Speaking straight to the reader.",
+    "Tap the wrongly spelt word|We definately need more time to finish the project.|definately|It’s spelt definitely.",
+    "Tap the wrong word|Their going to the cinema after school.|their|It should be they’re (they are).",
+    "Tap the word that creates sibilance|The silent snake slid slowly southwards.|silent;snake;slid;slowly;southwards|Repeated s sounds."])
+]);
+
+add("fr", [
+  ...H("Grammar","Tap the verb",[
+    "Tap the past participle (perfect tense)|Hier, nous avons mangé au restaurant avec mes cousins.|mangé|Avons + mangé = we ate.",
+    "Tap a verb in the imperfect tense|Quand j’étais petit, je jouais au foot tous les jours.|étais;jouais;j’étais|The imperfect describes what used to happen.",
+    "Tap the future tense verb|L’année prochaine, je visiterai la France avec ma famille.|visiterai|Infinitive + ai = I will visit.",
+    "Tap the conditional verb|Si j’avais le temps, je voyagerais autour du monde.|voyagerais|Future stem + imperfect ending = I would travel.",
+    "Tap the negative word|Je ne mange jamais de viande.|jamais;ne|Ne… jamais means never.",
+    "Tap the reflexive pronoun|Je me lève à sept heures.|me|Se lever: to get up.",
+    "Tap the false friend|J’ai passé un examen ce matin.|passé|Passer un examen means to sit an exam, not to pass it.",
+    "Tap the word for ‘bass’ (the instrument)|Je joue de la basse dans un groupe de métal.|basse|Jouer de + instrument."])
+]);
+
+add("cs", [
+  ...R("Data","Data numbers",[
+    "Bits in a byte|8|0|32|1||0",
+    "Bytes in a kibibyte|1024|0|2048|8||0",
+    "Largest number in 8-bit unsigned binary|255|0|512|1||0",
+    "Most negative number in 8-bit two’s complement|-128|-256|0|1||0",
+    "Denary value of hex 1F|31|0|64|1||0",
+    "Colours possible with 8-bit colour depth|256|0|512|8||0"]),
+  ...H("Programming","Tap the line with the bug",[
+    {q:"Tap the line with the bug.", lines:["total = 0","for i in range(1, 11)","    total = total + i","print(total)"], a:["for i in range(1, 11)"], why:"The for line needs a colon at the end."},
+    {q:"Tap the line with the bug.", lines:["age = int(input(\"Age? \"))","if age >= 16:","print(\"You can apply\")"], a:["print(\"You can apply\")"], why:"Code inside an if must be indented."},
+    {q:"Tap the line that crashes.", lines:["scores = [5, 8, 3]","print(scores[0])","print(scores[3])"], a:["print(scores[3])"], why:"Index 3 is out of range: the list has indexes 0, 1 and 2."},
+    {q:"Tap the line that crashes.", lines:["x = 5","y = \"3\"","print(x + y)"], a:["print(x + y)"], why:"You can’t add a number and a string. Use int(y)."},
+    {q:"Tap the line with the logic error. It should print the average.", lines:["marks = [6, 8, 10]","avg = sum(marks) / 2","print(avg)"], a:["avg = sum(marks) / 2"], why:"Divide by len(marks), which is 3."},
+    {q:"Tap the line with the bug.", lines:["def double(n):","    n * 2","print(double(4))"], a:["    n * 2"], why:"It needs return n * 2, otherwise it gives None."}])
+]);
+
+add("geo", [
+  ...R("Estimate it","Geography numbers",[
+    "Sea temperature needed for a tropical storm to form|27|0|40|1|°C|1",
+    "Latitude where air sinks to form deserts|30|0|90|5|°|5",
+    "Population that makes a megacity|10|0|30|1|million|0",
+    "World population|8.2|0|15|0.1|billion|0.4",
+    "Share of the Earth’s water that is fresh|3|0|50|1|%|1",
+    "Length of the Quaternary period|2.6|0|10|0.1|million years|0.3"])
+]);
+
+add("re", [
+  ...R("Islam: practices","Islam in numbers",[
+    "Daily prayers (Salah)|5|0|10|1||0",
+    "Percentage of savings given as Zakah|2.5|0|20|0.5|%|0",
+    "Percentage paid as Khums (Shi’a)|20|0|50|1|%|0",
+    "Articles of Faith in Sunni Islam|6|0|10|1||0"])
+]);
